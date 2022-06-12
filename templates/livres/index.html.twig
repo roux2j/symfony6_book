@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Listes des livres{% endblock %}
+
+{% block mycss %}
+    <style>
+        .card{
+            transition:1s;
+        }
+        .card:hover{
+            transform:scale(1.2);
+            transition:1s;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-end align-items-center my-3">
+    <a href="{{path('livre.create')}}" class="btn btn-primary">Nouveau livre</a>
+</div>
+
+    <h1 class="text-center my-3 display-5">Listes des livres :</h1>
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success text-center" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+        
+    {% if livre|length == 0 %}
+    <p class="mt-5 lead text-center">Aucun livre existant</p>
+    {% else %}
+        <div class="container d-flex flex-column justify-content-center align-items-center">
+            {% for livre in livre %}
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h4 class="card-title">Nom du livre: {{livre.nom}}</h4>
+                        <h4 class="card-title">Auteur du livre: {{livre.auteur}}</hh4>
+                        <h4 class="card-title">Avis sur le livre: {{livre.avis}}</h4>
+                        <h4 class="card-title">Note sur le livre: {{livre.note}}</h4>
+
+                        <a href="{{path('livre.edit', {'id': livre.id}) }}" class="p-1 btn btn-sm btn-secondary">Modifier</a>
+
+                        <form action="{{path('livre.delete', {'id': livre.id}) }}" method="post" class="d-inline p-1">
+                            <input type="hidden" name="_token" value="{{csrf_token('delete'~ livre.id)}}">
+                            <input type="submit" class="btn btn-sm btn-danger" value="supprimer" onclick="return confirm('confirmer la suppression ?')">
+                        </form>
+
+                    </div>
+                </div>
+
+                <hr class="py-1">
+            {% endfor %}
+        </div> 
+    {% endif %}
+
+
+    
+    {# {% if livre|length == 0 %}
+    <p class="mt-5 lead text-center">Aucun contact existant</p>
+    {% else %}
+        <div class="container d-flex flex-column justify-content-center align-items-center">
+            {% for contact in contact %}
+                <div class="card shadow">
+                <div class="card-body">
+                    <h4 class="card-title">Id: {{contact.id}}</h4>
+                    <h4 class="card-title">Nom: {{contact.fullName}}</h4>
+                    <h4 class="card-title">Email: {{contact.email}}</h4>
+                    <h4 class="card-title">Age: {{ (contact.age == null) ? '....' : contact.age }}</h4>
+                    <a href="{{path('contact.edit', {'id': contact.id}) }}" class="p-1 btn btn-sm btn-secondary">Modifier</a>
+                    <form action="{{path('contact.delete', {'id': contact.id}) }}" method="post" class="d-inline p-1">
+                        <input type="hidden" name="_token" value="{{csrf_token('delete'~ contact.id)}}">
+                        <input type="submit" class="btn btn-sm btn-danger" value="supprimer" onclick="return confirm('confirmer la suppression ?')">
+
+                    </form>
+                </div>
+                </div>
+
+                <hr class="py-1">
+            {% endfor %}
+        </div> 
+    {% endif %} #}
+
+{% endblock %}

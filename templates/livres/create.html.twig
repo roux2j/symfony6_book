@@ -1,0 +1,38 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Agenda -  Nouveau contact{% endblock %}
+
+{% block content %}
+    <h1 class="text-center my-3 display-5">Nouveau contact</h1>
+
+    <div class="container">
+        {{form_start(livres_create_form)}}
+            
+            <div class="mb-3">
+                <label for="">Nom</label>
+                
+                {{form_widget(livres_create_form.nom, {'attr' : {'class' : 'form-control'} } )}}
+            </div>
+            
+            <div class="mb-3">
+                <label for="">auteur</label>
+                
+                {{form_widget(livres_create_form.auteur,{'attr' : {'class' : 'form-control'} })}}
+            </div>
+            
+            <div class="mb-3">
+                <label for="">avis</label>
+                
+                {{form_widget(livres_create_form.avis, {'attr' : {'class' : 'form-control'} })}}
+            </div>
+
+            <div class="mb-3">
+                <label for="">Notes</label>
+                
+                {{form_widget(livres_create_form.note, {'attr' : {'class' : 'form-control'} })}}
+            </div>
+
+            <input type="submit" class="btn btn-success" value="Créer" formnovalidate >
+        {{form_end(livres_create_form)}}
+    </div>
+{% endblock %}
